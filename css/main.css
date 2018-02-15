@@ -1,0 +1,14 @@
+#container {
+    background: blue;
+}
+
+#room {
+    background-size: 100%;
+}
+
+.cmd {
+    background: black;
+    color: white;
+}
+
+
