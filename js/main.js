@@ -2,6 +2,7 @@ $(document).ready(init);
 $(document).keypress(handle_keypress);
 
 var game = {
+    size_ratio: 1,
     energy: 1,
     inventory: {}
 }
@@ -29,6 +30,6 @@ function handle_cmd(text) {
 
 function init() {
     body = $("body");
-    rooms_init();
+    rooms_init(game);
     room_enter("office");
 }
