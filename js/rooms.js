@@ -58,15 +58,15 @@ var rooms = {
             "fridge": {
                 "autoload": "close",
                 "actions": ["open", "close"],
-                "contains": "energy",
+                "contains": ["energy"],
                 "x": 400,
                 "y": 140
             },
             "energy": {
                 "autoload": false,
-                "actions": ["take", "drink"],
-                "x": 420,
-                "y": 180
+                "actions": ["drink"],
+                "x": 320,
+                "y": 55
             }
         }
     }
@@ -86,6 +86,8 @@ function room_handle_command(cmd) {
         return room_open(cmd[1]);
     else if (cmd[0] == "close")
         return room_close(cmd[1]);
+    else if (cmd[0] == "drop")
+        return room_drop(cmd[1]);
 
     var commands = rooms[room_current].commands;
     if (commands != undefined && commands[cmd] != undefined)
@@ -150,19 +152,31 @@ function room_take(name) {
     return true;
 }
 
+function room_drop(key) {
+    var asset = inventory.items[key];
+    if (asset == undefined) {
+        command_output("How would you drop something you don't have? Dummy!");
+        return false;
+    }
+
+    var assets = rooms[room_current].assets;
+    if (assets[key] == undefined || assets[key].actions.indexOf("drop") < 0) {
+        command_output("You can't drop " + key + " here!");
+        return false;
+    }
+    
+    room_add_asset(key, assets[key]);
+    inventory.remove(key);
+    command_output("You dropped " + key + "!");
+    return true;
+}
+
 function room_close(key) {
     return room_asset_do(key, "close");
 }
 
 function room_open(key) {
-    if (room_asset_do(key, "open")) {
-        var assets = rooms[room_current].assets;
-        for (var contained in assets[key].contained) {
-            room_add_asset(contained, assets[contained]);
-        }
-        return true;
-    }
-    return false;
+    return room_asset_do(key, "open");
 }
 
 function room_asset_do(key, verb) {
@@ -182,12 +196,41 @@ function room_asset_do(key, verb) {
     room_remove_asset(key);
     asset.autoload = verb;
     room_add_asset(key, asset);
+
+    var assets = rooms[room_current].assets;
+    for (var contained in assets[key].contains) {
+        contained_key = assets[key].contains[contained];
+        contained_asset = assets[contained_key];
+        if (verb == "open") {
+            contained_asset.autoload = true;
+            contained_asset.actions.push("drop");
+            contained_asset.actions.push("take");
+            room_add_asset(contained_key, contained_asset);
+            console.log("SHOW");
+            console.log(contained_asset);
+        }
+        else {
+            contained_asset.autoload = false;
+            var actions = ["take", "drop"];
+            for (var i = 0; i < 2; i++) {
+                var idx = contained_asset.actions.indexOf(actions[i]);
+                while (idx >= 0) {
+                    contained_asset.actions.splice(idx, 1);
+                    idx = contained_asset.actions.indexOf(actions[i]);
+                }
+            }
+            room_remove_asset(contained_key);
+            console.log("HIDE");
+            console.log(contained_asset);
+        }
+    }
+
     return true;
 }
 
 function room_add_asset(key, asset) {
     var id = "asset-" + key;
-    console.log("autoload " + id);
+    console.log("add asset " + id);
     var image = document.getElementById(id);
 
     if (image == undefined) {
