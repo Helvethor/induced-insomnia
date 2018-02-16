@@ -10,6 +10,78 @@
 				"duration": 3,
                 "x": 180,
                 "y": 360
+            },
+            "pack_6": {
+                "autoload": false,
+                "available": false,
+                "actions": ["take", "drop"],
+                "value": 2,
+				"duration": 2,
+                "x": 580,
+                "y": 360
+            },
+            "pack_6": {
+                "autoload": false,
+                "available": false,
+                "actions": ["take", "drop"],
+                "value": 2,
+				"duration": 2,
+                "x": 580,
+                "y": 360
+            },
+            "pack_5": {
+                "autoload": false,
+                "available": false,
+                "actions": ["take", "drop"],
+                "value": 2,
+				"duration": 2,
+                "x": 580,
+                "y": 360
+            },
+            "pack_4": {
+                "autoload": false,
+                "available": false,
+                "actions": ["take", "drop"],
+                "value": 2,
+				"duration": 2,
+                "x": 580,
+                "y": 360
+            },
+            "pack_3": {
+                "autoload": false,
+                "available": false,
+                "actions": ["take", "drop"],
+                "value": 2,
+				"duration": 2,
+                "x": 580,
+                "y": 360
+            },
+            "pack_2": {
+                "autoload": false,
+                "available": false,
+                "actions": ["take", "drop"],
+                "value": 2,
+				"duration": 2,
+                "x": 580,
+                "y": 360
+            },
+            "pack_1": {
+                "autoload": false,
+                "available": false,
+                "actions": ["take", "drop"],
+                "value": 2,
+				"duration": 2,
+                "x": 580,
+                "y": 360
+            },
+            "energy": { // fake asset, you take it when there is a pack_i on the desk
+                "autoload": false,
+                "available": false,
+                "actions": ["drink"],
+                "value": 3,
+				"duration": 2,
+                "x": 580,
+                "y": 360
             }
         },
         "rooms": [
@@ -17,7 +89,9 @@
             "doorway"
         ],
         "commands": {
-            ["code"]: function () { return game.code(); }
+            "code": function () { return game.code(); },
+            "drop pack": function() { return room_drop("pack_6"); },
+            "take energy": room_office_take_energy,
         },
         "update": room_office_update,
         "exit": "doorway",
@@ -197,7 +271,7 @@
             "pack_6": {
                 "autoload": true,
                 "available": true,
-                "actions": ["take", "drop", "drink"],
+                "actions": ["take", "drop"],
                 "value": 1,
 				"duration": 2,
                 "x": 240,
@@ -226,7 +300,7 @@
             "station_out"
         ],
         "commands": {
-            "take energy": function() { return room_shop_take("pack_6"); },
+            "take pack": function() { return room_shop_take("pack_6"); },
             "take coffee": function() { return room_shop_take("coffee"); },
             "take pills": function() { return room_shop_take("pills"); },
             "pay": room_shop_pay,
@@ -315,10 +389,37 @@ function room_enter(name) {
         }
     }
 
-    if (room_current != undefined)
+    if (room_current != undefined) {
         command_output("You went to the " + rooms[name].name);
+
+        if (name == "office"
+            || name == "toilet"
+            || name == "doorway"
+            || name == "kitchen"
+            || name == "bedroom"
+            || name == "outdoor_out"
+            || name == "shop"
+            || name == "station_out"
+            || name == "drugstore_out"
+            || name == "station_in" && room_current == "station_out"
+            || name == "drugstore_in" && room_current == "drugstore_out"
+            || name == "outdoor_in" && room_current == "outdoor_out")
+            room_sound("steps");
+        else if (name == "road"
+            || room_current == "road"
+            || name == "outdoor_in" && room_current == "drugstore_in"
+            || name == "outdoor_in" && room_current == "station_in")
+            room_sound("car");
+
+    }
     room_current = name;
     return true;
+}
+
+function room_sound(name) {
+    var audio = new Audio("sound/" + name + ".ogg");
+    console.log(audio);
+    audio.play();
 }
 
 function room_take(name) {
@@ -506,7 +607,7 @@ function room_office_update() {
     
     for (var i = 0; i < game.completion_steps; i++) {
         var chunk = document.createElement("div");
-        chunk.style.width = w / game.completion_steps; 
+        chunk.style.width = w / game.completion_steps - 0.1; 
         chunk.style.height = h;
         chunk.style.background = "green";
         chunk.style.float = "left";
@@ -551,6 +652,23 @@ function room_shop_exit() {
     }
     room_enter("station_out");
     return true;
+}
+
+function room_office_take_energy() {
+    for (var i = 6; i > 0; i--) {
+        var asset = rooms["office"].assets["pack_" + i];
+        if (asset.available) {
+            room_remove_asset("pack_" + i);
+            i -= 1;
+            asset.available = false;
+            var asset = rooms["office"].assets["pack_" + i];
+            asset.available = true;
+            room_add_asset("pack_" + i, asset);
+            var asset = rooms["office"].assets["energy"];
+            inventory.add("energy", Object.assign({}, asset));
+        }
+    }
+    console.log(rooms["office"].assets);
 }
 
 function rooms_init(game) {

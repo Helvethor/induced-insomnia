@@ -33,7 +33,7 @@ var aliases = {
 	"no slep pills": "pills",
     "cup" : "coffee",
     "can": "energy",
-    "redbull": "energy"
+    "redbull": "energy",
     "outside": "outdoor",
 };
 
@@ -53,7 +53,7 @@ function command_parse(cmd) {
 }
 
 function command_handle(text) {
-    raw_cmd = command_in.text();
+    raw_cmd = command_in.text().toLowerCase();
     raw_cmd = raw_cmd.substring(3, raw_cmd.length);
     command_in.text(">> ");
     var cmd = command_parse(raw_cmd);

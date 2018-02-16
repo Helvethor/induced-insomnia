@@ -67,6 +67,10 @@ var game = {
     },
     code: function() {
         game.completion += 1;
+        if (game.completion >= game.completion_steps)
+            game.over("U deed it! Teh kode is complit, it is garbaege butt komplettt!");
+        else
+            command_output("U kode lik urin teh xxM4TR1Xxx!", true);
         return true;
     },
     turn_on_radio: function() {
