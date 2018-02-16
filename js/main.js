@@ -13,8 +13,12 @@ var game = {
                 if (room_current == "road"
                     || room_current == "outdoor_in"
                     || room_current == "station_in"
-                    || room_current == "drugstore_in")
-                    return game.over("You done goofed ina cra accricident!");
+                    || room_current == "drugstore_in"){
+                	room_sound("crash");
+                	return game.over("You done goofed ina cra accricident!");
+
+                }
+                room_sound("sleep");
                 return game.over("You fell asleep! The code was not finished and you were fried!");
             }
 
@@ -56,21 +60,28 @@ var game = {
         return true;
     },
     drink: function(name) {
-        if (game.consume(name, "drink"))
+        if (game.consume(name, "drink")){
+        	room_sound("drink");
             command_output("GLURP GLURP GLURP! You feel regenerated!");
+        }
+
         return false;
     },
     eat: function(name) {
-        if (game.consume(name, "eat"))
+        if (game.consume(name, "eat")){
             command_output("NOM NOM NOM! You feel regenerated!");
+            room_sound("eat");
+        }
+
         return false;
     },
     code: function() {
         game.completion += 1;
+        room_sound("code");
         if (game.completion >= game.completion_steps)
-            game.over("U deed it! Teh kode is complit, it is garbaege butt komplettt!");
+            game.over("U deed it! Teh kode is complit, it is garbaege butt komplettt!", true);
         else
-            command_output("U kode lik urin teh xxM4TR1Xxx!", true);
+            command_output("U kode lik urin teh xxM4TR1Xxx!");
         return true;
     },
     turn_on_radio: function() {
