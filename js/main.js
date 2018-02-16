@@ -27,10 +27,8 @@ var game = {
         command_output_append("You are now tired!");
     },
     awaken: function() {
-        var tired = $("#tired")[0];
-        if (tired != undefined) {
-            tired.parentElement.removeChild(tired);
-        }
+        ui.awaken();
+        command_output_append("You are not tired anymore!");
     },
     consume: function(name, action) {
         var item = inventory.items[name];
@@ -75,9 +73,9 @@ var game = {
     	}
     	return false;
     },
-    over: function(how) {
-        if (how ==  "sleep")
-            command_output("You fell asleep!");
+    over: function(how, win) {
+        command_output(how);
+        ui.game_over(how, win);
     }
 }
 
