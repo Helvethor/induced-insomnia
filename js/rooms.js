@@ -5,6 +5,7 @@ var rooms = {
                 "autoload": true,
                 "actions": ["take", "drink"],
                 "value": 2,
+				"duration": 3,
                 "x": 180,
                 "y": 360
             }
@@ -23,6 +24,8 @@ var rooms = {
             "pills": {
                 "autoload": true,
                 "actions": ["take", "eat"],
+				"value": 1,
+				"duration": 5,
                 "x": 730,
                 "y": 140
             }
@@ -65,11 +68,36 @@ var rooms = {
             "energy": {
                 "autoload": false,
                 "actions": ["take", "drink"],
+				"value": 3,
+				"duration": 2,
                 "x": 420,
                 "y": 180
             }
-        }
-    }
+        },
+		"rooms": [
+			"doorway",
+		],
+	},
+	"bedroom": {
+		"assets": {
+			"drawer": {
+				"autoload": "close",
+				"actions": ["open", "close"],
+				"contains": ["wallet"],
+				"x": 80,
+				"y": 200
+			},
+			"wallet": {
+				"autoload": false,
+				"actions": ["take"],
+				"x": 90,
+				"y": 210
+			}
+		},
+		"rooms": [
+			"doorway",
+		],
+	},
 };
 
 var room_current = undefined;

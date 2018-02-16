@@ -47,8 +47,8 @@ var game = {
         if (item.value <= 0)
             inventory.remove(name);
 
-        game.energy.increase(3);
-        return true; // Don't decrease energy!
+        game.energy.increase(item.duration);
+        return false; // Don't decrease energy!
     },
     drink: function(name) {
         if (game.consume(name, "drink"))
@@ -87,6 +87,6 @@ function handle_keypress(e) {
 function init() {
     body = $("body");
     rooms_init(game);
-    room_enter("kitchen");
+    room_enter("bedroom");
     room_update();
 }
