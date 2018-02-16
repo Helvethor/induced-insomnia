@@ -6,13 +6,32 @@ var aliases = {
     "goto ": "enter ",
     "go to ": "enter ",
     "go ": "enter ",
+<<<<<<< HEAD
     "grab": "take",
     "put down": "drop",
+=======
+    "grab ": "take ",
+>>>>>>> 793c61c1b53d69cef3b3c59da0ac7552a84cb08a
     "wc": "toilet",
     "dorway": "doorway",
     "kichen": "kitchen",
     "kichen": "kitchen",
     "berdoom": "bedroom",
+	"energy drink": "energy",
+	"engine": "car",
+	"stashon": "station",
+	"gas station": "station",
+	"gas stashon": "station",
+	"drusgtor": "drugstore",
+	"drugs": "drugstore",
+	"sation": "shop",
+	"raido": "radio",
+	"cofefe": "coffee",
+	"enegry": "pack",
+	"no slep plls": "pills",
+	"plls": "pills",
+	"no sleep plls": "pills",
+	"no slep pills": "pills",
 };
 
 function command_parse(cmd) {
