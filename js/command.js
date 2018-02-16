@@ -63,6 +63,10 @@ function command_handle(text) {
         result = game.drink(cmd[1]);
     else if (cmd[0] == "die")
         result = game.over("You died... just plain old died...");
+    else if (cmd[0] == "something") {
+        command_output("Smart gril... But this won't help you kode!");
+        result = false;
+    }
     else 
         result = room_handle_command(cmd);
 

@@ -9,8 +9,14 @@ var game = {
     energy: {
         value: 2,
         decrease: function (count) {
-            if (game.energy.value < 0)
-                return game.over("sleep");
+            if (game.energy.value < 0) {
+                if (room_current == "road"
+                    || room_current == "outdoor_in"
+                    || room_current == "station_in"
+                    || room_current == "drugstore_in")
+                    return game.over("You done goofed ina cra accricident!");
+                return game.over("You fell asleep! The code was not finished and you were fried!");
+            }
 
             game.energy.value -= count;
             if (game.energy.value <= 0)
@@ -47,7 +53,7 @@ var game = {
             inventory.remove(name);
 
         game.energy.increase(item.duration);
-        return false; // Don't decrease energy!
+        return true;
     },
     drink: function(name) {
         if (game.consume(name, "drink"))
