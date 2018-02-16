@@ -66,11 +66,12 @@ var game = {
         return true;
     },
     turn_on_radio: function() {
-    	if (radio_on)
+    	if (game.radio_on)
     		command_output("Radio already on and playing some fire beats !");
     	else{
     		game.energy.increase(4);
-    		radio_on=true;
+    		game.radio_on=true;
+    		command_output("Rurning radio on. It's your favorite song, Slam Jam !")
     	}
     	return false;
     },

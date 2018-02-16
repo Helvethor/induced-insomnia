@@ -15,7 +15,7 @@ var rooms = {
             "doorway"
         ],
         "commands": {
-            "code": function () { return game.code(); }
+            ["code"]: function () { return game.code(); }
         },
         "update": room_office_update,
     },
@@ -52,7 +52,7 @@ var rooms = {
             "office",
             "kitchen",
             "bedroom",
-            "outside",
+            "outdoor_out",
         ],
         "exit": "outside"
     },
@@ -110,25 +110,34 @@ var rooms = {
             "turn on radio" : function() {return game.turn_on_radio(); },
             "turn on raido" : function() {return game.turn_on_radio(); },
             "drive" : function() {
-                                    if (inventory.items["key"]!=undefined)
-                                        return room_enter("road");
-                                    return command_output("You may need a key to drive...");
-                                }
-        }
+                if (inventory.items["key"]!=undefined)
+                    return room_enter("road");
+                return command_output("You may need a key to drive...");
+            }
+        },
         "rooms": [
             "road",
             "outdoor_out",
         ],
     },
+
+    "road": {
+        "commands": {
+            "turn left" : function() {return }
+        }
+    }
 };
 
 var room_current = undefined;
 
 function room_handle_command(cmd) {
     var commands = rooms[room_current].commands;
-    if (commands != undefined && commands[cmd] != undefined)
-        return commands[cmd]();
-    else if (cmd[0] == "enter")
+    if (commands != undefined){
+        var str = cmd.join(" ");
+        if(commands[str] != undefined)
+            return commands[str]();
+    }
+    if (cmd[0] == "enter")
         return room_enter(cmd[1]);
     else if (cmd[0] == "exit")
         return room_enter(rooms[room_current].exit);
