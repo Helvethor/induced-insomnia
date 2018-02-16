@@ -112,15 +112,36 @@ var rooms = {
         "exit": "doorway"
 	},
     "outdoor_out": {
-        
+        "rooms": [
+            "doorway",
+            "outdoor_in",
+        ],
+    },
+
+    "outdoor_in": {
+        "commands": {
+            "turn on radio" : function() {return game.turn_on_radio(); },
+            "turn on raido" : function() {return game.turn_on_radio(); },
+            "drive" : function() {
+                                    if (inventory.items["key"]!=undefined)
+                                        return room_enter("road");
+                                    return command_output("You may need a key to drive...");
+                                }
+        }
+        "rooms": [
+            "road",
+            "outdoor_out",
+        ],
     },
 };
 
 var room_current = undefined;
 
 function room_handle_command(cmd) {
-
-    if (cmd[0] == "enter")
+    var commands = rooms[room_current].commands;
+    if (commands != undefined && commands[cmd] != undefined)
+        return commands[cmd]();
+    else if (cmd[0] == "enter")
         return room_enter(cmd[1]);
     else if (cmd[0] == "exit")
         return room_enter(rooms[room_current].exit);
@@ -132,10 +153,6 @@ function room_handle_command(cmd) {
         return room_close(cmd[1]);
     else if (cmd[0] == "drop")
         return room_drop(cmd[1]);
-
-    var commands = rooms[room_current].commands;
-    if (commands != undefined && commands[cmd] != undefined)
-        return commands[cmd]();
 
     return false;
 }

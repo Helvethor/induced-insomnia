@@ -5,6 +5,7 @@ var game = {
     size_ratio: 1,
     completion: 0,
     completion_steps: 10,
+    radio_on: false,
     energy: {
         value: 2,
         decrease: function (count) {
@@ -63,6 +64,15 @@ var game = {
     code: function() {
         game.completion += 1;
         return true;
+    },
+    turn_on_radio: function() {
+    	if (radio_on)
+    		command_output("Radio already on and playing some fire beats !");
+    	else{
+    		game.energy.increase(4);
+    		radio_on=true;
+    	}
+    	return false;
     },
     over: function(how) {
         if (how ==  "sleep")
