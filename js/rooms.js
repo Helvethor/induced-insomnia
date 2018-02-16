@@ -1,9 +1,11 @@
 var rooms = {
     "office": {
+        "name": "office",
         "assets": {
             "coffee": {
                 "autoload": true,
-                "actions": ["take", "drink"],
+                "available": true,
+                "actions": ["take", "drop", "drink"],
                 "value": 2,
 				"duration": 3,
                 "x": 180,
@@ -18,12 +20,15 @@ var rooms = {
             "code": function () { return game.code(); }
         },
         "update": room_office_update,
+        "exit": "doorway",
     },
     "toilet": {
+        "name": "toilet",
         "assets": {
             "pills": {
                 "autoload": true,
-                "actions": ["take", "eat"],
+                "available": true,
+                "actions": ["take", "drop", "eat"],
 				"value": 1,
 				"duration": 5,
                 "x": 730,
@@ -38,10 +43,12 @@ var rooms = {
         "exit": "office",
     },
     "doorway": {
+        "name": "doorway",
         "assets": {
             "key": {
                 "autoload": true,
-                "actions": ["take"],
+                "available": true,
+                "actions": ["take", "drop"],
                 "x": 435,
                 "y": 87
             }
@@ -52,14 +59,16 @@ var rooms = {
             "office",
             "kitchen",
             "bedroom",
-            "outside",
+            "outdoor_out",
         ],
-        "exit": "outside"
+        "exit": "outdoor_out"
     },
     "kitchen": {
+        "name": "kitchen",
         "assets": {
             "fridge": {
                 "autoload": "close",
+                "available": true,
                 "actions": ["open", "close"],
                 "contains": ["energy"],
                 "x": 400,
@@ -67,7 +76,8 @@ var rooms = {
             },
             "energy": {
                 "autoload": false,
-                "actions": ["drink"],
+                "available": true,
+                "actions": ["take", "drop", "drink"],
 				"value": 3,
 				"duration": 2,
                 "x": 320,
@@ -77,8 +87,10 @@ var rooms = {
 		"rooms": [
 			"doorway",
 		],
+        "exit": "doorway"
 	},
 	"bedroom": {
+        "name": "bedroom",
 		"assets": {
 			"drawer": {
 				"autoload": "close",
@@ -89,7 +101,7 @@ var rooms = {
 			},
 			"wallet": {
 				"autoload": false,
-				"actions": ["take"],
+				"actions": ["take", "drop"],
 				"x": 90,
 				"y": 210
 			}
@@ -97,6 +109,7 @@ var rooms = {
 		"rooms": [
 			"doorway",
 		],
+        "exit": "doorway"
 	},
     "outdoor_out": {
         
@@ -161,7 +174,7 @@ function room_enter(name) {
 function room_take(name) {
     var asset = rooms[room_current].assets[name];
 
-    if (asset == undefined) {
+    if (asset == undefined || !asset.available) {
         command_output("Where did you see a " + name + "?");
         return false;
     }
@@ -178,6 +191,7 @@ function room_take(name) {
 
     inventory.add(name, asset);
     asset.autoload = false;
+    asset.available = false;
 
     command_output("You grabbed the " + name + "!");
     return true;
@@ -195,7 +209,13 @@ function room_drop(key) {
         command_output("You can't drop " + key + " here!");
         return false;
     }
+
+    if (assets[key].available) {
+        command_output("There is already " + key + " here!");
+        return false;
+    }
     
+    assets[key].available = true;
     room_add_asset(key, assets[key]);
     inventory.remove(key);
     command_output("You dropped " + key + "!");
@@ -203,11 +223,19 @@ function room_drop(key) {
 }
 
 function room_close(key) {
-    return room_asset_do(key, "close");
+    if (room_asset_do(key, "close")) {
+        command_output("You opened the " + key + "!");
+        return true;
+    }
+    return false;
 }
 
 function room_open(key) {
-    return room_asset_do(key, "open");
+    if (room_asset_do(key, "open")) {
+        command_output("You closed the " + key + "!");
+        return true;
+    }
+    return false;
 }
 
 function room_asset_do(key, verb) {
@@ -234,22 +262,12 @@ function room_asset_do(key, verb) {
         contained_asset = assets[contained_key];
         if (verb == "open") {
             contained_asset.autoload = true;
-            contained_asset.actions.push("drop");
-            contained_asset.actions.push("take");
             room_add_asset(contained_key, contained_asset);
             console.log("SHOW");
             console.log(contained_asset);
         }
         else {
             contained_asset.autoload = false;
-            var actions = ["take", "drop"];
-            for (var i = 0; i < 2; i++) {
-                var idx = contained_asset.actions.indexOf(actions[i]);
-                while (idx >= 0) {
-                    contained_asset.actions.splice(idx, 1);
-                    idx = contained_asset.actions.indexOf(actions[i]);
-                }
-            }
             room_remove_asset(contained_key);
             console.log("HIDE");
             console.log(contained_asset);
@@ -262,6 +280,10 @@ function room_asset_do(key, verb) {
 function room_add_asset(key, asset) {
     var id = "asset-" + key;
     console.log("add asset " + id);
+    
+    if (!asset.available)
+        return;
+
     var image = document.getElementById(id);
 
     if (image == undefined) {
