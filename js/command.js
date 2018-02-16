@@ -28,6 +28,8 @@ var aliases = {
 	"plls": "pills",
 	"no sleep plls": "pills",
 	"no slep pills": "pills",
+    "cup" : "coffee",
+    "can": "energy",
 };
 
 function command_parse(cmd) {

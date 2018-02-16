@@ -71,7 +71,7 @@ var game = {
     	else{
     		game.energy.increase(4);
     		game.radio_on=true;
-    		command_output("Rurning radio on. It's your favorite song, Slam Jam !")
+    		command_output("Turning radio on. It's your favorite song, Slam Jam !")
     	}
     	return false;
     },
@@ -98,6 +98,6 @@ function handle_keypress(e) {
 function init() {
     body = $("body");
     rooms_init(game);
-    room_enter("drugstore_in");
+    room_enter("office");
     room_update();
 }
