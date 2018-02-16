@@ -98,6 +98,6 @@ function handle_keypress(e) {
 function init() {
     body = $("body");
     rooms_init(game);
-    room_enter("drugstore_in");
+    room_enter("shop");
     room_update();
 }

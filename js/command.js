@@ -4,6 +4,7 @@ var command_updated = false;
 
 var aliases = {
     "goto ": "enter ",
+    "go out": "exit",
     "go to ": "enter ",
     "go ": "enter ",
     "grab": "take",
@@ -19,7 +20,7 @@ var aliases = {
 	"gas station": "station",
 	"gas stashon": "station",
 	"drusgtor": "drugstore",
-	"drugs": "drugstore",
+	"drugz": "drugstore",
 	"sation": "shop",
 	"raido": "radio",
 	"cofefe": "coffee",
@@ -31,6 +32,7 @@ var aliases = {
 };
 
 function command_parse(cmd) {
+    console.log("cmd input: " + cmd);
     for (var alias in aliases) {
         if (cmd.startsWith(alias)) {
             cmd = aliases[alias] + cmd.substring(alias.length, cmd.length);

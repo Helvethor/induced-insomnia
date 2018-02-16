@@ -140,11 +140,64 @@ var rooms = {
             "drugstore_out",
             "outdoor_in"
         ],
+        "exit": "drugstore_out"
+    },
+    "drugstore_out": {
+        "rooms": [
+            "drugstore_in",
+        ],
+        "commands": {
+            "enter drugstore": room_enter_drugs,
+            "go in": room_enter_drugs
+        },
     },
     "road": {
         "commands": {
             "turn left" : function() {return }
         }
+    },
+    "shop": {
+        "assets": {
+            "pack_6": {
+                "autoload": true,
+                "available": true,
+                "actions": ["take", "drop", "drink"],
+                "value": 1,
+				"duration": 2,
+                "x": 240,
+                "y": 290
+            },
+            "coffee": {
+                "autoload": true,
+                "available": true,
+                "actions": ["take", "drop", "drink"],
+                "value": 2,
+				"duration": 3,
+                "x": 40,
+                "y": 290
+            },
+            "pills": {
+                "autoload": true,
+                "available": true,
+                "actions": ["take", "drop", "eat"],
+                "value": 1,
+				"duration": 5,
+                "x": 270,
+                "y": 290
+            }
+        },
+        "rooms": [
+            "station_out"
+        ],
+        "commands": {
+            "take energy": function() { return room_shop_take("pack_6"); },
+            "take coffee": function() { return room_shop_take("coffee"); },
+            "take pills": function() { return room_shop_take("pills"); },
+            "pay": room_shop_pay,
+            "exit": room_shop_exit,
+        },
+        "paid": false,
+        "taken": false,
     }
 };
 
@@ -399,6 +452,41 @@ function room_office_update() {
     }
     console.log(bar);
     console.log("COMPLETION: " + game.completion);
+}
+
+function room_enter_drugs() {
+    command_output("The durgstor is closed! Ooohhh noooosesssss!");
+    return false;
+}
+
+function room_shop_pay() {
+    var wallet = inventory.items["wallet"];
+    if (wallet == undefined) {
+        command_output("You think everything is free? This is no communism, you need ca$h!");
+        return false;
+    }
+    rooms["shop"].paid = true;
+    inventory.remove("wallet");
+    command_output("You gave your entire wallet to Divid Hassselhloof!");
+    return true;
+}
+
+function room_shop_take(key) {
+    if (room_take(key)) {
+        rooms["shop"].taken = true;
+        return true;
+    }
+    return false;
+}
+
+function room_shop_exit() {
+    if (rooms["shop"].taken && !rooms["shop"].paid) {
+        command_output("You thought you could steal from TEH DIVID HASSSELHLHLOOOF???")
+        game.over("Divid Hassle...lele....ell...... David shot the shit out of your filthy ass!");
+        return false;
+    }
+    room_enter("station_out");
+    return true;
 }
 
 function rooms_init(game) {
