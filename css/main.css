@@ -6,6 +6,19 @@
     background-size: 100%;
 }
 
+#ui {
+    position: relative;
+}
+
+#inventory {
+    background-color: brown;
+    height: 60px;
+}
+
+#inventory img {
+    margin: 5px;
+}
+
 .cmd {
     background: black;
     color: white;
