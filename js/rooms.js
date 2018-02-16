@@ -94,16 +94,18 @@ var rooms = {
 		"assets": {
 			"drawer": {
 				"autoload": "close",
+                "available": true,
 				"actions": ["open", "close"],
 				"contains": ["wallet"],
 				"x": 80,
-				"y": 200
+				"y": 260
 			},
 			"wallet": {
 				"autoload": false,
+                "available": true,
 				"actions": ["take", "drop"],
-				"x": 90,
-				"y": 210
+				"x": 10,
+				"y": 170
 			}
 		},
 		"rooms": [
@@ -117,22 +119,28 @@ var rooms = {
             "outdoor_in",
         ],
     },
-
     "outdoor_in": {
+        "name": "outdoor",
         "commands": {
             "turn on radio" : function() {return game.turn_on_radio(); },
             "turn on raido" : function() {return game.turn_on_radio(); },
             "drive" : function() {
-                                    if (inventory.items["key"]!=undefined)
-                                        return room_enter("road");
-                                    return command_output("You may need a key to drive...");
-                                }
-        }
+                if (inventory.items["key"]!=undefined)
+                    return room_enter("road");
+                return command_output("You may need a key to drive...");
+            }
+        },
         "rooms": [
             "road",
             "outdoor_out",
         ],
     },
+    "drugstore_in": {
+        "rooms": [
+            "drugstore_out",
+            "outdoor_in"
+        ],
+    }
 };
 
 var room_current = undefined;
