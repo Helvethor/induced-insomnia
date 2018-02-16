@@ -153,7 +153,12 @@ var rooms = {
     },
     "road": {
         "commands": {
-            "turn left" : function() {return }
+            "turn left" : function() {return room_enter("drugstore_in");},
+            "turn right": function() {return room_enter("station_in");},
+            "enter drugstore": function() {return room_enter("drugstore_in");},
+            "enter station": function() {return room_enter("station_in");},
+            "turn on radio" : function() {return game.turn_on_radio(); },
+            "turn on raido" : function() {return game.turn_on_radio(); },
         }
     },
     "shop": {
@@ -198,6 +203,12 @@ var rooms = {
         },
         "paid": false,
         "taken": false,
+    },
+    "station_in": {
+    	"commands": { 
+    		"exit": function() {return romm_enter("station_out");},
+    		"": function() {return romm_enter("station_out");},
+    	}
     }
 };
 
