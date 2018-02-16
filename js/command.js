@@ -4,7 +4,8 @@ var command_updated = false;
 
 var aliases = {
     "goto ": "enter ",
-    "go out": "exit",
+    "go out ": "exit",
+    "go back ": "exit",
     "go to ": "enter ",
     "go ": "enter ",
     "grab": "take",
@@ -31,6 +32,7 @@ var aliases = {
 	"no slep pills": "pills",
     "cup" : "coffee",
     "can": "energy",
+    "outside": "outdoor",
 };
 
 function command_parse(cmd) {

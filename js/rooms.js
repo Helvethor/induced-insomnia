@@ -54,6 +54,7 @@
             }
         },
         "commands": {
+            "enter outdoor": function() {return room_enter("outdoor_out");},
         },
         "rooms": [
             "office",
@@ -114,10 +115,14 @@
         "exit": "doorway"
 	},
     "outdoor_out": {
+        "name": "outdoor",
         "rooms": [
             "doorway",
             "outdoor_in",
         ],
+        "commands":{
+            "enter car": function() {return room_enter("outdoor_in");},
+        }
     },
     "outdoor_in": {
         "name": "outdoor",
@@ -128,7 +133,11 @@
                 if (inventory.items["key"]!=undefined)
                     return room_enter("road");
                 return command_output("You may need a key to drive...");
-            }
+            },
+            "exit": function() {return room_enter("outdoor_out");},
+            "get out": function() {return room_enter("outdoor_out");},
+            "exit car": function() {return room_enter("outdoor_out");},
+            "get out of car": function() {return room_enter("outdoor_out");},
         },
         "rooms": [
             "road",
@@ -136,22 +145,35 @@
         ],
     },
     "drugstore_in": {
+        "name": "drugstore",
         "rooms": [
             "drugstore_out",
             "outdoor_in"
         ],
+        "commands":{ 
+            "exit": function() {return room_enter("drugstore_out");},
+            "get out": function() {return room_enter("drugstore_out");},
+            "exit car": function() {return room_enter("drugstore_out");},
+            "get out of car": function() {return room_enter("drugstore_out");},
+            "turn on radio" : function() {return game.turn_on_radio(); },
+            "turn on raido" : function() {return game.turn_on_radio(); },
+            "drive" : function() {return room_enter("outdoor_in");},
+        },
         "exit": "drugstore_out"
     },
     "drugstore_out": {
+        "name": "drugstore",
         "rooms": [
             "drugstore_in",
         ],
         "commands": {
             "enter drugstore": room_enter_drugs,
-            "go in": room_enter_drugs
+            "go in": room_enter_drugs,
+            "enter car": function() {return room_enter("station_in");},
         },
     },
     "road": {
+        "name": "road",
         "commands": {
             "turn left" : function() {return room_enter("drugstore_in");},
             "turn right": function() {return room_enter("station_in");},
@@ -159,9 +181,14 @@
             "enter station": function() {return room_enter("station_in");},
             "turn on radio" : function() {return game.turn_on_radio(); },
             "turn on raido" : function() {return game.turn_on_radio(); },
-        }
+        },
+        "rooms": [
+            "drugstore_in",
+            "station_in",
+        ],
     },
     "shop": {
+        "name": "shop",
         "assets": {
             "pack_6": {
                 "autoload": true,
@@ -205,10 +232,32 @@
         "taken": false,
     },
     "station_in": {
+        "name": "gas station",
     	"commands": { 
-    		"exit": function() {return romm_enter("station_out");},
-    		"": function() {return romm_enter("station_out");},
-    	}
+    		"exit": function() {return room_enter("station_out");},
+    		"get out": function() {return room_enter("station_out");},
+            "exit car": function() {return room_enter("station_out");},
+            "get out of car": function() {return room_enter("station_out");},
+            "turn on radio" : function() {return game.turn_on_radio(); },
+            "turn on raido" : function() {return game.turn_on_radio(); },
+            "drive" : function() {return room_enter("outdoor_in");},
+    	},
+        "rooms": [
+            "station_out",
+            "outdoor_in"
+        ]
+    },
+    "station_out":{
+        "name": "gas station",
+        "commands": {
+            "enter shop": function() {return room_enter("shop");},
+            "enter car": function() {return room_enter("station_in");},
+        },
+        "rooms": [
+            "station_in",
+            "shop"
+        ]
+
     }
 };
 
@@ -493,7 +542,7 @@ function room_shop_take(key) {
 function room_shop_exit() {
     if (rooms["shop"].taken && !rooms["shop"].paid) {
         command_output("You thought you could steal from TEH DIVID HASSSELHLHLOOOF???")
-        game.over("Divid Hassle...lele....ell...... David shot the shit out of your filthy ass!");
+        game.over("Divid Hassle...lele....ell...... David kicked the shit out of your filthy ass!");
         return false;
     }
     room_enter("station_out");
