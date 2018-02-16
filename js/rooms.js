@@ -98,6 +98,9 @@ var rooms = {
 			"doorway",
 		],
 	},
+    "outdoor_out": {
+        
+    },
 };
 
 var room_current = undefined;
