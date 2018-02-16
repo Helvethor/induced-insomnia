@@ -176,7 +176,11 @@
         "name": "road",
         "commands": {
             "turn left" : function() {return room_enter("drugstore_in");},
+            "go left" : function() {return room_enter("drugstore_in");},
+            "drive left" : function() {return room_enter("drugstore_in");},
             "turn right": function() {return room_enter("station_in");},
+            "go right": function() {return room_enter("station_in");},
+            "drive right": function() {return room_enter("station_in");},
             "enter drugstore": function() {return room_enter("drugstore_in");},
             "enter station": function() {return room_enter("station_in");},
             "turn on radio" : function() {return game.turn_on_radio(); },
