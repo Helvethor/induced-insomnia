@@ -4,14 +4,15 @@ var command_updated = false;
 
 var aliases = {
     "goto ": "enter ",
-    "go out ": "exit",
-    "go back ": "exit",
+    "go out": "exit",
+    "go back": "exit",
     "go to ": "enter ",
     "go ": "enter ",
     "grab": "take",
     "put down": "drop",
     "wc": "toilet",
     "dorway": "doorway",
+    "hallway": "doorway",
     "kichen": "kitchen",
     "kichen": "kitchen",
     "berdoom": "bedroom",
@@ -32,6 +33,7 @@ var aliases = {
 	"no slep pills": "pills",
     "cup" : "coffee",
     "can": "energy",
+    "redbull": "energy"
     "outside": "outdoor",
 };
 
@@ -56,7 +58,6 @@ function command_handle(text) {
     command_in.text(">> ");
     var cmd = command_parse(raw_cmd);
     var result = false;
-
     if (cmd[0] == "eat")
         result = game.eat(cmd[1]);
     else if (cmd[0] == "drink")
