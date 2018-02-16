@@ -1,4 +1,4 @@
-var rooms = {
+ rooms = {
     "office": {
         "name": "office",
         "assets": {
@@ -263,7 +263,7 @@ function room_enter(name) {
     }
 
     if (room_current != undefined)
-        command_output("You went to the " + name);
+        command_output("You went to the " + rooms[name].name);
     room_current = name;
     return true;
 }
