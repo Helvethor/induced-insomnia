@@ -67,7 +67,6 @@ var rooms = {
             },
             "energy": {
                 "autoload": false,
-<<<<<<< HEAD
                 "actions": ["drink"],
 				"value": 3,
 				"duration": 2,

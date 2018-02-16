@@ -6,12 +6,8 @@ var aliases = {
     "goto ": "enter ",
     "go to ": "enter ",
     "go ": "enter ",
-<<<<<<< HEAD
     "grab": "take",
     "put down": "drop",
-=======
-    "grab ": "take ",
->>>>>>> 793c61c1b53d69cef3b3c59da0ac7552a84cb08a
     "wc": "toilet",
     "dorway": "doorway",
     "kichen": "kitchen",
