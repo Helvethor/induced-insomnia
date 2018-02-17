@@ -622,18 +622,6 @@ function room_office_update() {
     var w = 100 * game.size_ratio;
     var h = 20 * game.size_ratio;
     
-    var text = $("#completion-text")[0];
-    if (text == undefined) {
-        text = document.createElement("p");
-        text.textContent = "GAME CODE";
-        text.id = "completion-text";
-        text.style.color = "green";
-        text.style.position = "absolute";
-        text.style.top = 230 * game.size_ratio;
-        text.style.left = 360 * game.size_ratio;
-        $("#room")[0].append(text);
-    }
-
     var bar = $("#completion-bar")[0];
     if (bar == undefined) {
         bar = document.createElement("div");
