@@ -181,7 +181,14 @@
 				"actions": ["take", "drop"],
 				"x": 10,
 				"y": 170
-			}
+			},
+            "wardrobe": {
+                "autoload": "close",
+                "available": true,
+                "actions": ["open", "close"],
+                "x": 400,
+                "y": 500
+            }
 		},
 		"rooms": [
 			"doorway",

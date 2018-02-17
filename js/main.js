@@ -117,6 +117,6 @@ function handle_keypress(e) {
 function init() {
     body = $("body");
     rooms_init(game);
-    room_enter("office");
+    room_enter("wardrobe");
     room_update();
 }
