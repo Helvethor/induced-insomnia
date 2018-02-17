@@ -43,6 +43,10 @@ var aliases = {
     "armoire": "wardrobe",
     "dorway": "doorway",
     "house": "doorway",
+    "cash": "wallet",
+    "money": "wallet",
+    "$": "wallet",
+    "dollar": "wallet",
 };
 
 var ignored_words = [
