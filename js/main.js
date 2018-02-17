@@ -1,5 +1,5 @@
 $(document).ready(init);
-$(document).keypress(handle_keypress);
+$(document).keydown(handle_keypress);
 
 var game = {
     size_ratio: 1,
