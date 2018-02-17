@@ -26,7 +26,6 @@ var aliases = {
 	"sation": "shop",
 	"raido": "radio",
 	"cofefe": "coffee",
-	"coffe": "coffee",
 	"cafe": "coffee",
 	"enegry": "pack",
 	"no slep plls": "pills",
@@ -81,6 +80,9 @@ function command_handle(text) {
     } else if(cmd[0] == "sudo") {
         game.energy.increase(100);
         command_output("Now playing god mode. ;)");
+    }
+    else if(cmd[0] == "mix"){
+        game.mix(cmd[1], cmd[2]);
     }
     else 
         result = room_handle_command(cmd);

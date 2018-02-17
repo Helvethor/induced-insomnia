@@ -1,3 +1,4 @@
+ // /!\ HIC SUNT DRACONES /!\
  rooms = {
     "office": {
         "name": "office",

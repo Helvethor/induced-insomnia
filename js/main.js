@@ -60,7 +60,11 @@ var game = {
         return true;
     },
     drink: function(name) {
-        if (game.consume(name, "drink")){
+    	if(room_current == "toilet" && name == undefined){
+    		room_sound("drink");
+            command_output("GLURP GLURP GLURP! This toilet water had a strange aftertaste...");
+    	}
+        else if (game.consume(name, "drink")){
         	room_sound("drink");
             command_output("GLURP GLURP GLURP! You feel regenerated!");
         }
@@ -97,6 +101,19 @@ var game = {
     over: function(how, win) {
         command_output(how);
         ui.game_over(how, win);
+    },
+    mix: function(item1, item2) {
+    	var item = inventory.items[item1];
+    	if (item == undefined){
+    		command_output("You can't mix what you don't have!");
+    		return false;
+    	}
+    	item = inventory.items[item2];
+    	if (item == undefined){
+    		command_output("You can't mix what you don't have!");
+    		return false;
+    	}
+    	game.over("The room fills with darkness, as your unholy beverage sparks with energy. What you created was not meant for mortals, and the gods are angered. Their mighty wrath detroys your soul in one instant, ending your life. You did not finish the game.");
     }
 }
 
