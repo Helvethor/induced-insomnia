@@ -718,9 +718,13 @@ function room_office_take_energy() {
 }
 
 function rooms_init(game) {
-    var container = $("#container");
     room = $("#room");
-    game.size_ratio = container.width() / 800;
+    var rw = window.innerWidth / 800;
+    var rh = (window.innerHeight-120) / 450;
+    game.size_ratio = rw < rh ? rw : rh;
     room.width(game.size_ratio * 800);
     room.height(game.size_ratio * 450);
+
+    container = $("#container");
+    container.width(game.size_ratio * 800);
 }

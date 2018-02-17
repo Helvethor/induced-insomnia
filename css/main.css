@@ -3,7 +3,7 @@
 }
 
 #room {
-	position:"relative";
+	position: relative;
     background-size: 100%;
 }
 
@@ -25,4 +25,6 @@
     color: white;
 }
 
-
+body {
+	margin: 0px;
+}
