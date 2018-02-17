@@ -91,6 +91,7 @@
         ],
         "commands": {
             "code": function () { return game.code(); },
+            "code game": function () { return game.code(); },
             "drop pack": function() { return room_drop("pack_6"); },
             "take energy": room_office_take_energy,
         },
@@ -250,6 +251,7 @@
             "turn on radio" : function() {return game.turn_on_radio(); },
             "turn on raido" : function() {return game.turn_on_radio(); },
             "drive" : function() {return room_enter("outdoor_in");},
+            "go home" : function() {return room_enter("outdoor_in");},
         },
         "exit": "drugstore_out"
     },
@@ -357,6 +359,7 @@
             "turn on radio" : function() {return game.turn_on_radio(); },
             "turn on raido" : function() {return game.turn_on_radio(); },
             "drive" : function() {return room_enter("outdoor_in");},
+            "go home" : function() {return room_enter("outdoor_in");},
     	},
         "rooms": [
             "station_out",
