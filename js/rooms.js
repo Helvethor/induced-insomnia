@@ -182,22 +182,22 @@
                 "available": true,
 				"actions": ["open", "close"],
 				"contains": ["wallet"],
-				"x": 80,
-				"y": 260
+				"x": 54,
+				"y": 280
 			},
 			"wallet": {
 				"autoload": false,
                 "available": true,
 				"actions": ["take", "drop"],
-				"x": 10,
-				"y": 170
+				"x": 150,
+				"y": 295
 			},
             "wardrobe": {
                 "autoload": "close",
                 "available": true,
                 "actions": ["open", "close"],
-                "x": 400,
-                "y": 500
+                "x": 598,
+                "y": 40
             }
 		},
 		"rooms": [

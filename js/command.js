@@ -14,10 +14,10 @@ var aliases = {
     "dorway": "doorway",
     "hallway": "doorway",
     "kichen": "kitchen",
-    "kichen": "kitchen",
     "berdoom": "bedroom",
 	"energy drink": "energy",
 	"engine": "car",
+	"motor": "car",
 	"stashon": "station",
 	"gas station": "station",
 	"gas stashon": "station",
@@ -26,15 +26,21 @@ var aliases = {
 	"sation": "shop",
 	"raido": "radio",
 	"cofefe": "coffee",
+	"coffe": "coffee",
+	"cafe": "coffee",
 	"enegry": "pack",
 	"no slep plls": "pills",
 	"plls": "pills",
 	"no sleep plls": "pills",
+	"no sleep pills": "pills",
 	"no slep pills": "pills",
     "cup" : "coffee",
     "can": "energy",
     "redbull": "energy",
     "outside": "outdoor",
+    "closet": "wardrobe",
+    "armory": "wardrobe", // U n3v3r no o dumb te user is
+    "armoire": "wardrobe",
 };
 
 function command_parse(cmd) {
