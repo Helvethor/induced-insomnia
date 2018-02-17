@@ -34,6 +34,7 @@ var aliases = {
 	"no sleep pills": "pills",
 	"no slep pills": "pills",
     "cup" : "coffee",
+    "mug" : "coffee",
     "can": "energy",
     "redbull": "energy",
     "outside": "outdoor",
