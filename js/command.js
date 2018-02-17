@@ -27,6 +27,8 @@ var aliases = {
 	"drugz": "drugstore",
 	"sation": "shop",
 	"raido": "radio",
+    "coffee":"coffee",
+    "coffe":"coffee",
 	"cofefe": "coffee",
 	"cafe": "coffee",
 	"enegry": "pack",
@@ -93,8 +95,10 @@ function command_handle(text) {
         result = game.eat(cmd[1]);
     else if (cmd[0] == "drink")
         result = game.drink(cmd[1]);
-    else if (cmd[0] == "sleep")
+    else if (cmd[0] == "sleep"){
+        room_sound("sleep");
         result = game.over("You slept for 7 months. You didn't finish your game. You lost your job.");
+    }
     else if (cmd[0] == "die")
         result = game.over("You died... just plain old died...");
     else if (cmd[0] == "something") {
