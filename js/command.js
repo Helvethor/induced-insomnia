@@ -41,6 +41,7 @@ var aliases = {
     "closet": "wardrobe",
     "armory": "wardrobe", // U n3v3r no o dumb te user is
     "armoire": "wardrobe",
+    "dorway": "doorway",
 };
 
 function command_parse(cmd) {
