@@ -21,6 +21,8 @@ var aliases = {
 	"stashon": "station",
 	"gas station": "station",
 	"gas stashon": "station",
+    "drugstore": "drugstore",
+    "drugs" : "drugstore",
 	"drusgtor": "drugstore",
 	"drugz": "drugstore",
 	"sation": "shop",
@@ -91,6 +93,8 @@ function command_handle(text) {
         result = game.eat(cmd[1]);
     else if (cmd[0] == "drink")
         result = game.drink(cmd[1]);
+    else if (cmd[0] == "sleep")
+        result = game.over("You slept for 7 months. You didn't finish your game. You lost your job.");
     else if (cmd[0] == "die")
         result = game.over("You died... just plain old died...");
     else if (cmd[0] == "something") {
