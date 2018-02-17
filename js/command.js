@@ -70,6 +70,9 @@ function command_handle(text) {
     } else if(cmd[0] == "shit") {
         command_output("Congrats! You shat your pants! But it's not the right game...");
         result = false;
+    } else if(cmd[0] == "sudo") {
+        game.energy.increase(100);
+        command_output("Now playing god mode. ;)");
     }
     else 
         result = room_handle_command(cmd);
