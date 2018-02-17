@@ -679,9 +679,9 @@ function room_shop_take(key) {
 
 function room_shop_exit() {
     if (rooms["shop"].taken && !rooms["shop"].paid) {
-        command_output("You thought you could steal from TEH DIVID HASSSELHLHLOOOF???");
         room_sound("david");
-        game.over("Divid Hassle...lele....ell...... David kicked the shit out of your filthy ass!");
+        game.over("You forgot to pay, so Divid Hassle...lele....ell...... David kicked the shit out of your filthy ass!");
+        command_output("You thought you could steal from TEH DIVID HASSSELHLHLOOOF???");
         return false;
     }
     room_enter("station_out");

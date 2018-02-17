@@ -94,12 +94,12 @@ var game = {
     	else{
     		game.energy.increase(4);
     		game.radio_on=true;
+    		room_sound("slam");
     		command_output("Turning radio on. It's your favorite song, Slam Jam !")
     	}
     	return false;
     },
     over: function(how, win) {
-        command_output(how);
         ui.game_over(how, win);
     },
     mix: function(item1, item2) {
