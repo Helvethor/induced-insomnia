@@ -52,6 +52,7 @@ var aliases = {
     "$": "wallet",
     "dollar": "wallet",
     "pie":"cake",
+    "cüp":"coffee",
 };
 
 var ignored_words = [
