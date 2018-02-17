@@ -91,7 +91,7 @@ function command_handle(text) {
     raw_cmd = raw_cmd.substring(3, raw_cmd.length);
     command_in.text(">> ");
     var cmd = command_parse(raw_cmd);
-    cmd = cmd.slice(0, cmd.length > 2 ? 2 : cmd.length);
+    //cmd = cmd.slice(0, cmd.length > 2 ? 2 : cmd.length);
     var result = false;
     if (cmd[0] == "eat")
         result = game.eat(cmd[1]);
