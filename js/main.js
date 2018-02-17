@@ -7,7 +7,7 @@ var game = {
     completion_steps: 10,
     radio_on: false,
     energy: {
-        value: 2,
+        value: 1,
         decrease: function (count) {
             if (game.energy.value < 0) {
                 if (room_current == "road"
