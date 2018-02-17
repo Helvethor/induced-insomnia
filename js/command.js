@@ -83,6 +83,8 @@ function command_handle(text) {
     }
     else if(cmd[0] == "mix"){
         game.mix(cmd[1], cmd[2]);
+    }else if(cmd[0] == "test"){
+        command_output("Everything seems fine.");
     }
     else 
         result = room_handle_command(cmd);
