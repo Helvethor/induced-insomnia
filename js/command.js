@@ -35,6 +35,7 @@ var aliases = {
     "can": "energy",
     "redbull": "energy",
     "outside": "outdoor",
+    "house": "doorway",
 };
 
 function command_parse(cmd) {
