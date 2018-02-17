@@ -144,8 +144,8 @@
             "cake": {
                 "autoload": true,
                 "available": true,
-                "x": 600,
-                "y": 160,
+                "x": 580,
+                "y": 300,
             },
             "fridge": {
                 "autoload": "close",
@@ -161,8 +161,8 @@
                 "actions": ["take", "drop", "drink"],
 				"value": 3,
 				"duration": 2,
-                "x": 320,
-                "y": 55
+                "x": 450,
+                "y": 240
             },
             
         },
@@ -267,14 +267,14 @@
         "name": "road",
         "commands": {
             "turn left" : function() {return room_enter("drugstore_in");},
-            "go left" : function() {return room_enter("drugstore_in");},
+            "enter left" : function() {return room_enter("drugstore_in");},
             "drive left" : function() {return room_enter("drugstore_in");},
             "turn right": function() {return room_enter("station_in");},
-            "go right": function() {return room_enter("station_in");},
+            "enter right": function() {return room_enter("station_in");},
             "drive right": function() {return room_enter("station_in");},
             "enter drugstore": function() {return room_enter("drugstore_in");},
             "enter station": function() {return room_enter("station_in");},
-            "go":  function() {
+            "enter":  function() {
                 room_sound("crash"); 
                 return game.over("You drove offroad and died in a horrible fashion."
                     +" You should sleep more next time, silly.");
@@ -284,7 +284,7 @@
                 return game.over("You drove offroad and died in a horrible fashion."
                     +" You should sleep more next time, silly.");
             },
-            "go straight": function() {
+            "enter straight": function() {
                 room_sound("crash"); 
                 return game.over("You drove offroad and died in a horrible fashion."
                     +" You should sleep more next time, silly.");
@@ -329,7 +329,7 @@
                 "actions": ["take", "drop", "eat"],
                 "value": 1,
 				"duration": 5,
-                "x": 270,
+                "x": 370,
                 "y": 290
             }
         },
