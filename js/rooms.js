@@ -398,6 +398,8 @@ function room_handle_command(cmd) {
         return room_close(cmd[1]);
     else if (cmd[0] == "drop")
         return room_drop(cmd[1]);
+    else if (cmd[0] == "wash" && room_current == "toilet")
+        command_output("You can't wash your hands, there is no sink dummy!");
 
     return false;
 }
@@ -428,8 +430,6 @@ function room_enter(name) {
     }
 
     if (room_current != undefined) {
-        command_output("You went to the " + rooms[name].name);
-
         if (name == "office"
             || name == "toilet"
             || name == "doorway"
@@ -448,6 +448,11 @@ function room_enter(name) {
             || name == "outdoor_in" && room_current == "drugstore_in"
             || name == "outdoor_in" && room_current == "station_in")
             room_sound("car");
+
+        if (room_current == "toilet")
+            command_output("You didn't wash your hands, filthy scum!");
+        else
+            command_output("You went to the " + rooms[name].name);
 
     }
     room_current = name;
