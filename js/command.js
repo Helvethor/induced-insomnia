@@ -45,8 +45,25 @@ var aliases = {
     "house": "doorway",
 };
 
+var ignored_words = [
+    "a", "an", "of", "the", "for", "by", "with", "before", "after", "my"
+];
+
+function command_ignore_words(cmd) {
+    var words = cmd.split(" ");
+    for (var i in words)  {
+        var j = ignored_words.indexOf(words[i]);
+        if (j >= 0) {
+            words.splice(i, 1);
+        }
+    }
+    return words.join(" ");
+}
+
 function command_parse(cmd) {
     console.log("cmd input: " + cmd);
+    cmd = command_ignore_words(cmd);
+    console.log("cmd ignored: " + cmd);
     for (var alias in aliases) {
         if (cmd.startsWith(alias)) {
             cmd = aliases[alias] + cmd.substring(alias.length, cmd.length);
