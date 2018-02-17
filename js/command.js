@@ -67,6 +67,9 @@ function command_handle(text) {
     else if (cmd[0] == "something") {
         command_output("Smart gril... But this won't help you kode!");
         result = false;
+    } else if(cmd[0] == "shit") {
+        command_output("Congrats! You shat your pants! But it's not the right game...");
+        result = false;
     }
     else 
         result = room_handle_command(cmd);

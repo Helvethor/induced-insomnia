@@ -141,6 +141,12 @@
     "kitchen": {
         "name": "kitchen",
         "assets": {
+            "cake": {
+                "autoload": true,
+                "available": true,
+                "x": 600,
+                "y": 160,
+            },
             "fridge": {
                 "autoload": "close",
                 "available": true,
@@ -157,7 +163,11 @@
 				"duration": 2,
                 "x": 320,
                 "y": 55
-            }
+            },
+            
+        },
+        "commands": {
+            "take cake": function() {room_remove_asset("cake"); return command_output("You took and ate the cake. It was delicious, but it was also a lie.");},
         },
 		"rooms": [
 			"doorway",
@@ -243,7 +253,7 @@
         "commands": {
             "enter drugstore": room_enter_drugs,
             "go in": room_enter_drugs,
-            "enter car": function() {return room_enter("station_in");},
+            "enter car": function() {return room_enter("drugstore_in");},
         },
     },
     "road": {
@@ -257,6 +267,26 @@
             "drive right": function() {return room_enter("station_in");},
             "enter drugstore": function() {return room_enter("drugstore_in");},
             "enter station": function() {return room_enter("station_in");},
+            "go":  function() {
+                room_sound("crash"); 
+                return game.over("You drove offroad and died in a horrible fashion."
+                    +" You should sleep more next time, silly.");
+            },
+            "drive": function() {
+                room_sound("crash"); 
+                return game.over("You drove offroad and died in a horrible fashion."
+                    +" You should sleep more next time, silly.");
+            },
+            "go straight": function() {
+                room_sound("crash"); 
+                return game.over("You drove offroad and died in a horrible fashion."
+                    +" You should sleep more next time, silly.");
+            },
+            "drive straight": function() {
+                room_sound("crash"); 
+                return game.over("You drove offroad and died in a horrible fashion."
+                    +" You should sleep more next time, silly.");
+            },
             "turn on radio" : function() {return game.turn_on_radio(); },
             "turn on raido" : function() {return game.turn_on_radio(); },
         },
@@ -330,6 +360,7 @@
         "commands": {
             "enter shop": function() {return room_enter("shop");},
             "enter car": function() {return room_enter("station_in");},
+            "enter station": function() {return room_enter("shop");},
         },
         "rooms": [
             "station_in",
@@ -368,7 +399,7 @@ function room_enter(name) {
     console.log("target: " + name);
     console.log("current: " + room_current);
     if (room_current != undefined && rooms[room_current].rooms.indexOf(name) < 0) {
-        command_output("There is no such place!");
+        command_output("There is no such place around here!");
         return false;
     }
 
@@ -548,7 +579,7 @@ function room_add_asset(key, asset) {
         image.style.top = asset.y * game.size_ratio + "px";
         image.style.width = image.width * game.size_ratio + "px";
         image.style.height = image.height * game.size_ratio + "px";
-        image.style.position = "relative";
+        image.style.position = "absolute";
         $("#room").append(image);
     };
     if (typeof asset.autoload == "string")
@@ -632,6 +663,7 @@ function room_shop_pay() {
     }
     rooms["shop"].paid = true;
     inventory.remove("wallet");
+    room_sound("cash");
     command_output("You gave your entire wallet to Divid Hassselhloof!");
     return true;
 }
@@ -646,7 +678,8 @@ function room_shop_take(key) {
 
 function room_shop_exit() {
     if (rooms["shop"].taken && !rooms["shop"].paid) {
-        command_output("You thought you could steal from TEH DIVID HASSSELHLHLOOOF???")
+        command_output("You thought you could steal from TEH DIVID HASSSELHLHLOOOF???");
+        room_sound("david");
         game.over("Divid Hassle...lele....ell...... David kicked the shit out of your filthy ass!");
         return false;
     }
