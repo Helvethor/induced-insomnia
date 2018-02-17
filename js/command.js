@@ -82,7 +82,7 @@ function command_parse(cmd) {
     
     cmd = cmd.split(" ");
     if (cmd[1] != undefined)
-        cmd[1] = command_parse(cmd[1])[0];
+        cmd[1] = command_parse(cmd.slice(1,cmd.length).join(" "))[0];
     console.log(cmd);
     return cmd;
 }
@@ -92,6 +92,7 @@ function command_handle(text) {
     raw_cmd = raw_cmd.substring(3, raw_cmd.length);
     command_in.text(">> ");
     var cmd = command_parse(raw_cmd);
+    cmd = cmd.slice(0, cmd.length > 2 ? 2 : cmd.length);
     var result = false;
     if (cmd[0] == "eat")
         result = game.eat(cmd[1]);
@@ -111,6 +112,12 @@ function command_handle(text) {
         result = false;
     } else if(cmd[0] == "fap") {
         command_output("You did it. It doesn't help much, but you did it nevertheless...");
+        result = false;
+    } else if(cmd[0] == "do") {
+        if (cmd[1] == "barrel")
+            command_output("You did a barrel roll!");
+        else if (cmd[1] == "drugs")
+            command_output("You're high... It's bad to do drugz you know?");
         result = false;
     } else if(cmd[0] == "sudo") {
         game.energy.increase(100);
