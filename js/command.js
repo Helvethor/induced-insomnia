@@ -77,6 +77,7 @@ function command_parse(cmd) {
     for (var alias in aliases) {
         if (cmd.startsWith(alias)) {
             cmd = aliases[alias] + cmd.substring(alias.length, cmd.length);
+            break;
         }
     }
     
